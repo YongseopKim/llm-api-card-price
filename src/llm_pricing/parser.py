@@ -11,9 +11,24 @@ from llm_pricing.updater import ModelPrice
 def build_prompt(provider_name: str, page_text: str) -> str:
     return f"""다음은 {provider_name}의 LLM API 가격 페이지에서 추출한 텍스트입니다.
 이 텍스트에서 텍스트/채팅 LLM 모델의 이름과 1M 토큰당 USD 가격을 추출하세요.
-이미지 생성, 비디오, 임베딩, TTS/STT 모델은 제외하세요.
-deprecated 모델도 제외하세요.
 
+## 모델명 규칙
+- 반드시 API에서 사용하는 모델 ID를 사용하세요 (소문자, 하이픈 구분).
+- 예: "claude-opus-4-6" (O), "Claude Opus 4.6" (X)
+- 예: "gpt-5" (O), "GPT-5" (X)
+
+## 제외 대상
+다음 유형의 모델은 모두 제외하세요:
+- deprecated 모델
+- 이미지 생성/비디오/임베딩/TTS/STT 모델
+- realtime (음성 대화) 모델 (예: gpt-4o-realtime-preview, gpt-realtime 등)
+- codex (코드 전용) 모델 (예: gpt-5-codex, gpt-5.2-codex, codex-mini 등)
+- computer-use 모델
+- 동일 모델의 날짜 태그 변형 (예: gpt-4o-2024-05-13 → gpt-4o만 포함)
+- 동일 모델의 -chat-latest, -search-preview, -search-api 등 별칭 변형
+- vision 전용 모델 (텍스트+비전 겸용은 포함)
+
+## 응답 형식
 반드시 아래 JSON 형식으로만 응답하세요:
 {{"models": [{{"name": "model-name", "input": 1.25, "output": 10.00}}, ...]}}
 
