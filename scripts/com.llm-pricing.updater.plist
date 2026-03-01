@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.llm-pricing.updater</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>__REPO_PATH__/.venv/bin/python</string>
+        <string>-m</string>
+        <string>llm_pricing.main</string>
+    </array>
+    <key>WorkingDirectory</key>
+    <string>__REPO_PATH__</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PYTHONPATH</key>
+        <string>__REPO_PATH__/src</string>
+    </dict>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>4</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>__REPO_PATH__/logs/updater.log</string>
+    <key>StandardErrorPath</key>
+    <string>__REPO_PATH__/logs/updater.err</string>
+</dict>
+</plist>

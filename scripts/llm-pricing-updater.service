@@ -1,0 +1,10 @@
+[Unit]
+Description=LLM API Pricing Updater
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=__REPO_PATH__
+Environment=PYTHONPATH=__REPO_PATH__/src
+ExecStart=__REPO_PATH__/.venv/bin/python -m llm_pricing.main
