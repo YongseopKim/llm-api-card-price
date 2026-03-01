@@ -44,7 +44,6 @@ PYTHONPATH=src python -m llm_pricing.main
 | claude-sonnet-4-5 | $3.00 | $15.00 |
 | claude-sonnet-4-6 | $3.00 | $15.00 |
 | claude-haiku-4-5 | $1.00 | $5.00 |
-| claude-haiku-3-5 | $0.80 | $4.00 |
 
 ### Google Gemini
 | Model | Input | Output |
@@ -59,36 +58,21 @@ PYTHONPATH=src python -m llm_pricing.main
 ### OpenAI
 | Model | Input | Output |
 |-------|------:|-------:|
-| o1-pro | $150.00 | $600.00 |
 | gpt-5.2-pro | $21.00 | $168.00 |
-| o3-pro | $20.00 | $80.00 |
 | gpt-5-pro | $15.00 | $120.00 |
-| o1 | $15.00 | $60.00 |
-| gpt-4o | $2.50 | $10.00 |
-| gpt-4.1 | $2.00 | $8.00 |
-| o3 | $2.00 | $8.00 |
 | gpt-5.2 | $1.75 | $14.00 |
 | gpt-5 | $1.25 | $10.00 |
 | gpt-5.1 | $1.25 | $10.00 |
-| o1-mini | $1.10 | $4.40 |
-| o3-mini | $1.10 | $4.40 |
-| o4-mini | $1.10 | $4.40 |
-| gpt-4.1-mini | $0.40 | $1.60 |
 | gpt-5-mini | $0.25 | $2.00 |
-| gpt-4o-mini | $0.15 | $0.60 |
-| gpt-4.1-nano | $0.10 | $0.40 |
 | gpt-5-nano | $0.05 | $0.40 |
 
 ### xAI (Grok)
 | Model | Input | Output |
 |-------|------:|-------:|
-| grok-3 | $3.00 | $15.00 |
 | grok-4-0709 | $3.00 | $15.00 |
-| grok-3-mini | $0.30 | $0.50 |
 | grok-4-1-fast-non-reasoning | $0.20 | $0.50 |
 | grok-4-1-fast-reasoning | $0.20 | $0.50 |
 | grok-4-fast-non-reasoning | $0.20 | $0.50 |
 | grok-4-fast-reasoning | $0.20 | $0.50 |
-| grok-code-fast-1 | $0.20 | $1.50 |
 
 <!-- PRICING_TABLE_END -->

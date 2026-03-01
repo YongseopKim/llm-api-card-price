@@ -7,6 +7,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 from llm_pricing.config import PROVIDERS, Provider, Settings
+from llm_pricing.filter import apply_rules, load_rules
 from llm_pricing.scraper import scrape_page, ScrapeError
 from llm_pricing.parser import parse_with_llm
 from llm_pricing.updater import (
@@ -57,11 +58,13 @@ async def run() -> None:
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
+    rules = load_rules()
+
     new_data: PricingData = {}
     for provider in PROVIDERS:
         result = await process_provider(provider, settings)
         if result is not None:
-            new_data[provider.toml_section] = result
+            new_data[provider.toml_section] = apply_rules(provider.toml_section, result, rules)
 
     if not new_data:
         logger.warning("No data collected from any provider")

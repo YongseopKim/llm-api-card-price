@@ -1,0 +1,19 @@
+# Model filtering rules per provider
+# prefix: model name must start with this string
+# min_version: first number after prefix must be >= this value
+
+[anthropic]
+prefix = "claude-"
+min_version = 4
+
+[gemini]
+prefix = "gemini-"
+min_version = 2
+
+[openai]
+prefix = "gpt-"
+min_version = 5
+
+[xai]
+prefix = "grok-"
+min_version = 4
