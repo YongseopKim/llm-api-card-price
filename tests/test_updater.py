@@ -1,4 +1,4 @@
-from llm_pricing.updater import ModelPrice, parse_toml, diff_pricing, write_toml
+from llm_pricing.updater import ModelPrice, parse_toml, diff_pricing, write_toml, generate_readme_table, update_readme
 
 SAMPLE_TOML = """\
 # LLM Pricing — USD per 1M tokens
@@ -80,3 +80,43 @@ def test_write_toml():
     assert "[anthropic]" in result
     assert "gpt-5" in result
     assert "Last updated:" in result
+
+
+def test_generate_readme_table():
+    data = {
+        "openai": {"gpt-5": ModelPrice(1.25, 10.00), "gpt-5-mini": ModelPrice(0.25, 2.00)},
+        "anthropic": {"claude-opus-4-6": ModelPrice(5.00, 25.00)},
+    }
+    table = generate_readme_table(data)
+    assert "## LLM API Pricing" in table
+    assert "### OpenAI" in table
+    assert "| gpt-5 " in table
+    assert "$1.25" in table
+    assert "$10.00" in table
+
+
+def test_update_readme_with_markers(tmp_path):
+    readme = tmp_path / "README.md"
+    readme.write_text(
+        "# My Project\n\nSome intro.\n\n"
+        "<!-- PRICING_TABLE_START -->\nold table\n<!-- PRICING_TABLE_END -->\n\n"
+        "## Footer\n"
+    )
+    data = {"openai": {"gpt-5": ModelPrice(1.25, 10.00)}}
+    update_readme(str(readme), data)
+    content = readme.read_text()
+    assert "<!-- PRICING_TABLE_START -->" in content
+    assert "<!-- PRICING_TABLE_END -->" in content
+    assert "old table" not in content
+    assert "$1.25" in content
+    assert "## Footer" in content
+
+
+def test_update_readme_creates_markers_if_missing(tmp_path):
+    readme = tmp_path / "README.md"
+    readme.write_text("# My Project\n")
+    data = {"openai": {"gpt-5": ModelPrice(1.25, 10.00)}}
+    update_readme(str(readme), data)
+    content = readme.read_text()
+    assert "<!-- PRICING_TABLE_START -->" in content
+    assert "$1.25" in content

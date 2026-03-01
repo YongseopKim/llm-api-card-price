@@ -132,3 +132,57 @@ def update_pricing_file(path: str, new_data: PricingData) -> PricingDiff:
             f.write(write_toml(merged))
 
     return d
+
+
+PROVIDER_DISPLAY_NAMES = {
+    "openai": "OpenAI",
+    "anthropic": "Anthropic",
+    "gemini": "Google Gemini",
+    "xai": "xAI (Grok)",
+}
+
+README_START_MARKER = "<!-- PRICING_TABLE_START -->"
+README_END_MARKER = "<!-- PRICING_TABLE_END -->"
+
+
+def generate_readme_table(data: PricingData) -> str:
+    today = date.today().isoformat()
+    lines = [
+        "## LLM API Pricing (USD per 1M tokens)",
+        f"> Last updated: {today}",
+        "",
+    ]
+
+    for section in sorted(data):
+        display = PROVIDER_DISPLAY_NAMES.get(section, section)
+        lines.append(f"### {display}")
+        lines.append("| Model | Input | Output |")
+        lines.append("|-------|------:|-------:|")
+        models = data[section]
+        for model_name in sorted(models, key=lambda m: (-models[m].input, m)):
+            p = models[model_name]
+            lines.append(f"| {model_name} | ${p.input:.2f} | ${p.output:.2f} |")
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+def update_readme(path: str, data: PricingData) -> None:
+    table = generate_readme_table(data)
+    block = f"{README_START_MARKER}\n{table}\n{README_END_MARKER}"
+
+    try:
+        with open(path) as f:
+            content = f.read()
+    except FileNotFoundError:
+        content = ""
+
+    if README_START_MARKER in content and README_END_MARKER in content:
+        start = content.index(README_START_MARKER)
+        end = content.index(README_END_MARKER) + len(README_END_MARKER)
+        content = content[:start] + block + content[end:]
+    else:
+        content = content.rstrip() + "\n\n" + block + "\n"
+
+    with open(path, "w") as f:
+        f.write(content)
