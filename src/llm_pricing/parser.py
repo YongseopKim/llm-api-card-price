@@ -24,9 +24,12 @@ def build_prompt(provider_name: str, page_text: str) -> str:
 - realtime (음성 대화) 모델 (예: gpt-4o-realtime-preview, gpt-realtime 등)
 - codex (코드 전용) 모델 (예: gpt-5-codex, gpt-5.2-codex, codex-mini 등)
 - computer-use 모델
-- 동일 모델의 날짜 태그 변형 (예: gpt-4o-2024-05-13 → gpt-4o만 포함)
+- deep-research 모델 (예: o3-deep-research, o4-mini-deep-research 등)
+- vision 전용 모델 (예: grok-2-vision-1212 등)
+- TTS/오디오 전용 모델 (예: gemini-2.5-pro-preview-tts, native-audio-preview 등)
+- 이미지 생성 전용 모델 (예: gemini-3.1-flash-image-preview 등)
+- 동일 모델의 날짜 태그/preview 변형 (예: gpt-4o-2024-05-13 → gpt-4o만 포함, gemini-2.5-flash-lite-preview-09-2025 → gemini-2.5-flash-lite만 포함)
 - 동일 모델의 -chat-latest, -search-preview, -search-api 등 별칭 변형
-- vision 전용 모델 (텍스트+비전 겸용은 포함)
 
 ## 응답 형식
 반드시 아래 JSON 형식으로만 응답하세요:
