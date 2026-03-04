@@ -74,7 +74,7 @@ async def parse_with_llm(
     max_retries: int = 2,
 ) -> dict[str, ModelPrice]:
     prompt = build_prompt(provider_name, page_text)
-    url = f"{proxy_url.rstrip('/')}/v1/chat/completions"
+    url = f"{proxy_url.rstrip('/')}/anthropic/v1/messages"
     last_error: Exception | None = None
 
     async with httpx.AsyncClient(timeout=60) as client:
@@ -83,14 +83,14 @@ async def parse_with_llm(
                 resp = await client.post(
                     url,
                     json={
-                        "model": f"anthropic.{model}",
+                        "model": model,
                         "max_tokens": 4096,
                         "messages": [{"role": "user", "content": prompt}],
                     },
                 )
                 resp.raise_for_status()
                 data = resp.json()
-                response_text = data["content"]
+                response_text = data["content"][0]["text"]
                 return parse_llm_response(response_text)
             except ValueError:
                 raise
