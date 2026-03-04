@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import re
 
-import anthropic
+import httpx
 
 from llm_pricing.updater import ModelPrice
 
@@ -69,26 +69,32 @@ async def parse_with_llm(
     provider_name: str,
     page_text: str,
     *,
-    api_key: str,
+    proxy_url: str,
     model: str = "claude-haiku-4-5",
     max_retries: int = 2,
 ) -> dict[str, ModelPrice]:
     prompt = build_prompt(provider_name, page_text)
-    client = anthropic.AsyncAnthropic(api_key=api_key)
+    url = f"{proxy_url.rstrip('/')}/anthropic/v1/messages"
     last_error: Exception | None = None
 
-    for attempt in range(max_retries):
-        try:
-            message = await client.messages.create(
-                model=model,
-                max_tokens=4096,
-                messages=[{"role": "user", "content": prompt}],
-            )
-            response_text = message.content[0].text
-            return parse_llm_response(response_text)
-        except ValueError:
-            raise
-        except Exception as e:
-            last_error = e
+    async with httpx.AsyncClient(timeout=60) as client:
+        for attempt in range(max_retries):
+            try:
+                resp = await client.post(
+                    url,
+                    json={
+                        "model": model,
+                        "max_tokens": 4096,
+                        "messages": [{"role": "user", "content": prompt}],
+                    },
+                )
+                resp.raise_for_status()
+                data = resp.json()
+                response_text = data["content"][0]["text"]
+                return parse_llm_response(response_text)
+            except ValueError:
+                raise
+            except Exception as e:
+                last_error = e
 
     raise RuntimeError(f"LLM parsing failed after {max_retries} attempts: {last_error}")

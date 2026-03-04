@@ -20,6 +20,6 @@ LLM 프로바이더별 API 가격을 자동 수집/갱신하는 시스템.
 ## 환경변수
 
 `.env` 파일에서 관리:
-- `ANTHROPIC_API_KEY` — LLM 파싱용
+- `LLM_PROXY_URL` — LLM Proxy Server URL (기본값: `http://192.168.0.2:8081`)
 - `TELEGRAM_BOT_TOKEN` — 알림 봇 토큰
 - `TELEGRAM_CHAT_ID` — 알림 대상 채팅 ID

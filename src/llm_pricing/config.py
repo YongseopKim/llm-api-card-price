@@ -38,7 +38,7 @@ PROVIDERS = [
 @dataclass
 class Settings:
     llm_model: str = field(default_factory=lambda: os.getenv("LLM_MODEL", "claude-haiku-4-5"))
-    anthropic_api_key: str = field(default_factory=lambda: os.getenv("ANTHROPIC_API_KEY", ""))
+    llm_proxy_url: str = field(default_factory=lambda: os.getenv("LLM_PROXY_URL", "http://192.168.0.2:8081"))
     telegram_bot_token: str = field(default_factory=lambda: os.getenv("TELEGRAM_BOT_TOKEN", ""))
     telegram_chat_id: str = field(default_factory=lambda: os.getenv("TELEGRAM_CHAT_ID", ""))
     scrape_timeout: int = 30

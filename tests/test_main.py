@@ -9,7 +9,7 @@ from llm_pricing.updater import ModelPrice
 async def test_process_provider_success():
     provider = Provider("TestProvider", "https://example.com", "test")
     settings = Settings()
-    settings.anthropic_api_key = "test-key"
+    settings.llm_proxy_url = "http://localhost:8081"
 
     with (
         patch("llm_pricing.main.scrape_page", new_callable=AsyncMock, return_value="page text"),

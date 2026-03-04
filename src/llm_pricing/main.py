@@ -38,7 +38,7 @@ async def process_provider(provider: Provider, settings: Settings) -> dict[str, 
         models = await parse_with_llm(
             provider.name,
             text,
-            api_key=settings.anthropic_api_key,
+            proxy_url=settings.llm_proxy_url,
             model=settings.llm_model,
             max_retries=settings.parse_max_retries,
         )

@@ -27,11 +27,11 @@ def test_settings_defaults():
 
 def test_settings_from_env(monkeypatch):
     monkeypatch.setenv("LLM_MODEL", "gpt-4.1-nano")
-    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.setenv("LLM_PROXY_URL", "http://10.0.0.1:9090")
     monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "test-token")
     monkeypatch.setenv("TELEGRAM_CHAT_ID", "-100123")
     s = Settings()
     assert s.llm_model == "gpt-4.1-nano"
-    assert s.anthropic_api_key == "test-key"
+    assert s.llm_proxy_url == "http://10.0.0.1:9090"
     assert s.telegram_bot_token == "test-token"
     assert s.telegram_chat_id == "-100123"
