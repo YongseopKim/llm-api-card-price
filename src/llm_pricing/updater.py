@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 
 import tomli
@@ -10,6 +10,7 @@ import tomli
 class ModelPrice:
     input: float
     output: float
+    extras: dict = field(default_factory=dict, compare=False)
 
 
 @dataclass(frozen=True)
@@ -50,9 +51,11 @@ def parse_toml(content: str) -> PricingData:
         result[section] = {}
         for model_name, prices in models.items():
             if isinstance(prices, dict) and "input" in prices and "output" in prices:
+                extras = {k: v for k, v in prices.items() if k not in ("input", "output")}
                 result[section][model_name] = ModelPrice(
                     input=float(prices["input"]),
                     output=float(prices["output"]),
+                    extras=extras,
                 )
     return result
 
@@ -84,6 +87,17 @@ def diff_pricing(old: PricingData, new: PricingData) -> PricingDiff:
     return PricingDiff(changed=changed, added=added, removed=removed)
 
 
+def _format_toml_value(v: object) -> str:
+    if isinstance(v, int):
+        if abs(v) >= 1_000:
+            s = f"{v:_}"
+            return s
+        return str(v)
+    if isinstance(v, float):
+        return f"{v:.2f}".rstrip("0").rstrip(".")
+    return repr(v)
+
+
 def write_toml(data: PricingData) -> str:
     today = date.today().isoformat()
     lines = [
@@ -107,9 +121,10 @@ def write_toml(data: PricingData) -> str:
             quoted = f'"{model_name}"'
             input_str = f"{p.input:.2f}".rstrip("0").rstrip(".")
             output_str = f"{p.output:.2f}".rstrip("0").rstrip(".")
-            lines.append(
-                f'{quoted:<{max_name_len}} = {{ input = {input_str}, output = {output_str} }}'
-            )
+            parts = [f"input = {input_str}", f"output = {output_str}"]
+            for k in sorted(p.extras):
+                parts.append(f"{k} = {_format_toml_value(p.extras[k])}")
+            lines.append(f'{quoted:<{max_name_len}} = {{ {", ".join(parts)} }}')
         lines.append("")
 
     return "\n".join(lines)
@@ -122,7 +137,14 @@ def update_pricing_file(path: str, new_data: PricingData) -> PricingDiff:
     merged = {}
     for provider in set(old_data) | set(new_data):
         if provider in new_data:
-            merged[provider] = new_data[provider]
+            merged_models = {}
+            old_models = old_data.get(provider, {})
+            for model, price in new_data[provider].items():
+                old_model = old_models.get(model)
+                if old_model and old_model.extras and not price.extras:
+                    price = ModelPrice(price.input, price.output, old_model.extras)
+                merged_models[model] = price
+            merged[provider] = merged_models
         else:
             merged[provider] = old_data[provider]
 

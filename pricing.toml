@@ -1,17 +1,11 @@
 # LLM Pricing — USD per 1M tokens
-# Last updated: 2026-03-01
+# Last updated: 2026-03-04
 #
 # Sources:
 #   - OpenAI: https://developers.openai.com/api/docs/pricing
 #   - Anthropic: https://platform.claude.com/docs/en/about-claude/pricing
 #   - Google: https://ai.google.dev/gemini-api/docs/pricing
 #   - xAI: https://docs.x.ai/docs/models
-#
-# Rate limits: rpm = requests/min, tpm = tokens/min (input)
-#   - Anthropic: Tier 1 ($5 cumulative). Opus 4.x and Sonnet 4.x share pools respectively.
-#   - OpenAI: Tier 1 ($5 paid). Higher tiers increase significantly.
-#   - Gemini: Tier 1 (billing enabled). Google does not publish exact numbers; values are approximate.
-#   - xAI: Default tier (single tier). Contact support@x.ai for higher limits.
 
 [anthropic]
 "claude-opus-4"     = { input = 15, output = 75, rpm = 50, tpm = 30_000 }
@@ -24,12 +18,13 @@
 "claude-haiku-4-5"  = { input = 1, output = 5, rpm = 50, tpm = 50_000 }
 
 [gemini]
-"gemini-3.1-pro-preview" = { input = 2, output = 12, rpm = 10, tpm = 250_000 }
-"gemini-2.5-pro"         = { input = 1.25, output = 10, rpm = 150, tpm = 1_000_000 }
-"gemini-3-flash-preview" = { input = 0.5, output = 3, rpm = 10, tpm = 250_000 }
-"gemini-2.5-flash"       = { input = 0.3, output = 2.5, rpm = 300, tpm = 2_000_000 }
-"gemini-2.0-flash"       = { input = 0.1, output = 0.4, rpm = 300, tpm = 2_000_000 }
-"gemini-2.5-flash-lite"  = { input = 0.1, output = 0.4, rpm = 300, tpm = 2_000_000 }
+"gemini-3.1-pro-preview"        = { input = 2, output = 12, rpm = 10, tpm = 250_000 }
+"gemini-2.5-pro"                = { input = 1.25, output = 10, rpm = 150, tpm = 1_000_000 }
+"gemini-3-flash-preview"        = { input = 0.5, output = 3, rpm = 10, tpm = 250_000 }
+"gemini-2.5-flash"              = { input = 0.3, output = 2.5, rpm = 300, tpm = 2_000_000 }
+"gemini-3.1-flash-lite-preview" = { input = 0.25, output = 1.5 }
+"gemini-2.5-flash-lite"         = { input = 0.1, output = 0.4, rpm = 300, tpm = 2_000_000 }
+"gemini-2.0-flash"              = { input = 0.07, output = 0.3, rpm = 300, tpm = 2_000_000 }
 
 [openai]
 "gpt-5.2-pro" = { input = 21, output = 168, rpm = 500, tpm = 30_000 }

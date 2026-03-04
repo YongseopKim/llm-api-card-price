@@ -31,7 +31,7 @@ PYTHONPATH=src python -m llm_pricing.main
 
 <!-- PRICING_TABLE_START -->
 ## LLM API Pricing (USD per 1M tokens)
-> Last updated: 2026-03-01
+> Last updated: 2026-03-04
 
 ### Anthropic
 | Model | Input | Output |
@@ -52,8 +52,9 @@ PYTHONPATH=src python -m llm_pricing.main
 | gemini-2.5-pro | $1.25 | $10.00 |
 | gemini-3-flash-preview | $0.50 | $3.00 |
 | gemini-2.5-flash | $0.30 | $2.50 |
-| gemini-2.0-flash | $0.10 | $0.40 |
+| gemini-3.1-flash-lite-preview | $0.25 | $1.50 |
 | gemini-2.5-flash-lite | $0.10 | $0.40 |
+| gemini-2.0-flash | $0.07 | $0.30 |
 
 ### OpenAI
 | Model | Input | Output |
