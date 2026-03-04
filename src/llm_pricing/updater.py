@@ -107,7 +107,6 @@ def write_toml(data: PricingData) -> str:
         "# Sources:",
         "#   - OpenAI: https://developers.openai.com/api/docs/pricing",
         "#   - Anthropic: https://platform.claude.com/docs/en/about-claude/pricing",
-        "#   - Google: https://ai.google.dev/gemini-api/docs/pricing",
         "#   - xAI: https://docs.x.ai/docs/models",
         "",
     ]
@@ -159,7 +158,6 @@ def update_pricing_file(path: str, new_data: PricingData) -> PricingDiff:
 PROVIDER_DISPLAY_NAMES = {
     "openai": "OpenAI",
     "anthropic": "Anthropic",
-    "gemini": "Google Gemini",
     "xai": "xAI (Grok)",
 }
 

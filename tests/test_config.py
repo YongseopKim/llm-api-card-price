@@ -1,8 +1,8 @@
 from llm_pricing.config import PROVIDERS, Settings
 
 
-def test_providers_has_four_entries():
-    assert len(PROVIDERS) == 4
+def test_providers_has_three_entries():
+    assert len(PROVIDERS) == 3
 
 
 def test_providers_have_required_fields():

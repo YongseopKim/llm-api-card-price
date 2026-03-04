@@ -45,17 +45,6 @@ PYTHONPATH=src python -m llm_pricing.main
 | claude-sonnet-4-6 | $3.00 | $15.00 |
 | claude-haiku-4-5 | $1.00 | $5.00 |
 
-### Google Gemini
-| Model | Input | Output |
-|-------|------:|-------:|
-| gemini-3.1-pro-preview | $2.00 | $12.00 |
-| gemini-2.5-pro | $1.25 | $10.00 |
-| gemini-3-flash-preview | $0.50 | $3.00 |
-| gemini-2.5-flash | $0.30 | $2.50 |
-| gemini-3.1-flash-lite-preview | $0.25 | $1.50 |
-| gemini-2.5-flash-lite | $0.10 | $0.40 |
-| gemini-2.0-flash | $0.07 | $0.30 |
-
 ### OpenAI
 | Model | Input | Output |
 |-------|------:|-------:|

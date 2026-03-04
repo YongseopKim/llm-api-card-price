@@ -23,11 +23,6 @@ PROVIDERS = [
         toml_section="anthropic",
     ),
     Provider(
-        name="Google Gemini",
-        url="https://ai.google.dev/gemini-api/docs/pricing",
-        toml_section="gemini",
-    ),
-    Provider(
         name="xAI",
         url="https://docs.x.ai/docs/models",
         toml_section="xai",

@@ -6,10 +6,6 @@
 prefix = "claude-"
 min_version = 4
 
-[gemini]
-prefix = "gemini-"
-min_version = 2
-
 [openai]
 prefix = "gpt-"
 min_version = 5

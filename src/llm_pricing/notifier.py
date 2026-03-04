@@ -10,7 +10,6 @@ from llm_pricing.updater import PricingDiff
 PROVIDER_DISPLAY = {
     "openai": "OpenAI",
     "anthropic": "Anthropic",
-    "gemini": "Gemini",
     "xai": "xAI",
 }
 
