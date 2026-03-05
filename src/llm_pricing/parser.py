@@ -82,6 +82,7 @@ async def parse_with_llm(
             try:
                 resp = await client.post(
                     url,
+                    headers={"X-Client-ID": "llm-api-card-price"},
                     json={
                         "model": model,
                         "max_tokens": 4096,
